@@ -49,4 +49,24 @@ docker run -it --rm --name two --network=custom ubuntu:14.04
 ```
 из второго контейнера можем пинговать первый `ping one`
 
+Simple-DNS task
 
+```
+docker network create simple-dns
+docker run -d --name stepik-linking-docker --network=simple-dns parseq/stepik-linking-docker 
+docker run -it --network=simple-dns parseq/stepik-linking-docker-client
+```
+#### 9. Создание образа из контейнера
+```
+docker commit img-from-container myimage
+docker images
+```
+ -с / --change применяет инструкцию к создаваемому образу. В данном случе мы берем контейнер create-image-from-me, командой commit создаем из него образ newimage, опцией --change определяя команду (аналогичную таковой Dockerfile)
+ ```
+ docker commit --change='CMD ["python3"]' create-image-from-me myimage
+ ```
+ 
+ Dockerfile - описывает процесс создания образа
+ `FROM` - из какого базового образа создем новый образ
+ ``
+ 
