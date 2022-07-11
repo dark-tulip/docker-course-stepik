@@ -80,6 +80,8 @@ docker images
  
  #### 10. First arg on cmd 
  ```
+ При использовании режима exec для ENTRYPOINT аргументы CMD добавляются в конце.
+ 
  # Dockerfile
 FROM ubuntu:14.04
 ENTRYPOINT echo Hello $0!
