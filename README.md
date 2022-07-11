@@ -29,7 +29,7 @@ docker volume rm $(docker volume ls -qf dangling=true)
 docker run -d --name port-export -p <port_on_host_machine>:<port_inside_container> image
 docker run -d --name ports-image -p 4200:80 parseq/stepik-ports-docker 
 curl localhost:4200
-
+```
 Запустить в режиме демона
 ```
 docker run -d parseq/stepik-exec-docker
@@ -37,7 +37,7 @@ docker exec -it 8633756b1eb2
 
 psql -U postgres -c 'SELECT * FROM answers'
 ```
-```
+
 #### 7. Delete all docker containers 
 ```
 docker rm -f $(docker ps -a -q)
