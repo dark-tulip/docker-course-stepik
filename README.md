@@ -114,3 +114,9 @@ VOLUME /home/stepik
 ENTRYPOINT ["bin/bash", "-c", "nano"]
 ```
 
+Удалить все образы не помеченные тегами
+```
+docker rmi $(docker images -f "dangling=true" -q)
+```
+
+    
