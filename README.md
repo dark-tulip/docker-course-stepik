@@ -78,3 +78,10 @@ docker images
  `FROM` - из какого базового образа создем новый образ
  ``
  
+ #### 10. First arg on cmd 
+ ```
+ # Dockerfile
+FROM ubuntu:14.04
+ENTRYPOINT echo Hello $0!
+CMD ["World"]
+ ```
