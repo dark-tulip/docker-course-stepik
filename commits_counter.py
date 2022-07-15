@@ -1,10 +1,12 @@
+from datetime import datetime
+
 import requests
 import json
 import time
 
 
-START_DATE = time.strptime("2016-01-01T00:00:00Z", '%Y-%m-%dT%H:%M:%SZ')
-STOP_DATE = time.strptime("2016-12-31T23:59:59Z", '%Y-%m-%dT%H:%M:%SZ')
+START_DATE = datetime(2016, 1, 1, 0, 0)
+STOP_DATE = datetime(2016, 12, 31, 23, 59)
 TIMEZONE_PATTERN = "%Y-%m-%dT%H:%M:%SZ"
 
 
@@ -16,7 +18,7 @@ def check_date_range(commit_date):
     return START_DATE <= commit_date <= STOP_DATE
 
 
-def count_commits(resp):
+def count_ok_commits(resp):
 
     commits = json.loads(resp.text)
     commits_cnt = 0
@@ -84,13 +86,16 @@ https://github.com/davidsoergel/worldmake"""
 
 
 total_ok_commits = 0
+
 for url in urls_str.split():
 
     response = requests.get(generate_api_from_url(url))
 
-    if response.status_code // 100 == 2 or response.status_code // 100 == 3:
-
-        total_ok_commits += count_commits(response)
-
+    if response.status_code == 200:
+        now = count_ok_commits(response)
+        total_ok_commits += count_ok_commits(response)
+        print("Commits", now, url)
+    else:
+        print("Error", response.status_code, url)
 
 print(total_ok_commits)
