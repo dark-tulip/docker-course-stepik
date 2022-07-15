@@ -86,6 +86,7 @@ total_ok_commits = 0
 for url in urls_str.split():
 
     raw_url = requests.get(url).url
+    
     response = requests.get(generate_api_from_url(raw_url))
 
     if response.status_code == 200:
