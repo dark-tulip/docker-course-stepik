@@ -86,12 +86,11 @@ total_ok_commits = 0
 for url in urls_str.split():
 
     raw_url = requests.get(url).url
-    
     response = requests.get(generate_api_from_url(raw_url))
 
     if response.status_code == 200:
         now = count_ok_commits(response)
-        total_ok_commits += count_ok_commits(response)
+        total_ok_commits += now
         print("Commits", now, url)
     else:
         print("Error", response.status_code, url)
