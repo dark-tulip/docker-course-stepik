@@ -1,12 +1,10 @@
-from datetime import datetime
-
-import requests
 import json
 import time
 
+import requests
 
-START_DATE = datetime(2016, 1, 1, 0, 0)
-STOP_DATE = datetime(2016, 12, 31, 23, 59)
+START_DATE = time.strptime("2016-01-01T00:00:00Z", '%Y-%m-%dT%H:%M:%SZ')
+STOP_DATE = time.strptime("2016-12-31T23:59:59Z", '%Y-%m-%dT%H:%M:%SZ')
 TIMEZONE_PATTERN = "%Y-%m-%dT%H:%M:%SZ"
 
 
@@ -19,7 +17,6 @@ def check_date_range(commit_date):
 
 
 def count_ok_commits(resp):
-
     commits = json.loads(resp.text)
     commits_cnt = 0
 
@@ -84,12 +81,12 @@ https://github.com/swift-lang/swift-k
 https://github.com/Novartis/yap
 https://github.com/davidsoergel/worldmake"""
 
-
 total_ok_commits = 0
 
 for url in urls_str.split():
 
-    response = requests.get(generate_api_from_url(url))
+    raw_url = requests.get(url).url
+    response = requests.get(generate_api_from_url(raw_url))
 
     if response.status_code == 200:
         now = count_ok_commits(response)
