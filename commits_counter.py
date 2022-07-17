@@ -1,98 +1,42 @@
-import json
-import time
-
 import requests
+from datetime import datetime
+from github import Github, GithubException
 
-START_DATE = time.strptime("2016-01-01T00:00:00Z", '%Y-%m-%dT%H:%M:%SZ')
-STOP_DATE = time.strptime("2016-12-31T23:59:59Z", '%Y-%m-%dT%H:%M:%SZ')
-TIMEZONE_PATTERN = "%Y-%m-%dT%H:%M:%SZ"
+g = Github("YOUR_TOKEN")
 
-
-def generate_api_from_url(raw_request):
-    return raw_request.replace("https://github.com", "https://api.github.com/repos") + "/commits"
-
-
-def check_date_range(commit_date):
-    return START_DATE <= commit_date <= STOP_DATE
+SINCE = datetime(2016, 1, 1, 0, 0)
+UNTIL = datetime(2017, 1, 1, 0, 0)
+TOTAL_COMMITS = 0
 
 
-def count_ok_commits(resp):
-    commits = json.loads(resp.text)
-    commits_cnt = 0
-
-    for commit in commits:
-
-        commits_date = time.strptime(commit["commit"]["committer"]["date"], TIMEZONE_PATTERN)
-
-        if check_date_range(commits_date):
-            commits_cnt += 1
-
-    return commits_cnt
+def parse_url(url):
+    """
+    :param raw_url: https://github.com/username/repo_name
+    :return: username/repo_name
+    """
+    return url.replace("https://github.com/", "")
 
 
-urls_str = """https://github.com/apache/incubator-airflow
-https://github.com/ssadedin/bpipe
-https://github.com/bloomreach/briefly
-https://github.com/monajemi/clusterjob
-https://github.com/tburdett/Conan2
-https://github.com/broadinstitute/cromwell
-https://github.com/joergen7/cuneiform
-https://github.com/googlegenomics/dockerflow
-https://github.com/thieman/dagobah
-https://github.com/Factual/drake
-https://github.com/druths/xp
-https://github.com/sahilseth/flowr
-https://github.com/mailund/gwf
-https://github.com/Ensembl/ensembl-hive
-https://github.com/hammerlab/ketrew
-https://github.com/jtaghiyar/kronos
-https://github.com/StanfordBioinformatics/loom
-https://github.com/spotify/luigi
-https://github.com/intentmedia/mario
-https://github.com/openstack/mistral
-https://github.com/mfiers/Moa
-https://github.com/nipy/nipype
-https://github.com/adaptivegenome/openge
-https://github.com/fstrozzi/bioruby-pipengine
-https://github.com/pinterest/pinball
-https://github.com/Illumina/pyflow
-https://github.com/PacificBiosciences/pypeFLOW
-https://github.com/masa16/pwrake
-https://github.com/alastair-droop/qsubsec
-https://github.com/rabix/rabix
-https://github.com/richfitz/remake
-https://github.com/bjpop/rubra
-https://github.com/kirillseva/ruigi
-https://github.com/pharmbio/sciluigi
-https://github.com/soravux/scoop
-https://github.com/knipknap/SpiffWorkflow
-https://github.com/Netflix/suro
-https://github.com/BD2KGenomics/toil
-https://github.com/pcingola/BigDataScript
-https://github.com/ewels/clusterflow
-https://github.com/LPM-HMS/COSMOS2
-https://github.com/pydoit/doit
-https://github.com/joblib/joblib
-https://github.com/HECBioSim/Longbow
-https://github.com/cooperative-computing-lab/cctools
-https://github.com/nextflow-io/nextflow
-https://github.com/tonyfischetti/sake
-https://github.com/swift-lang/swift-k
-https://github.com/Novartis/yap
-https://github.com/davidsoergel/worldmake"""
+def get_redirected_url(raw_url):
+    """
+    If url was changed or redirected
+    :param raw_url: url
+    :return: new valid url
+    """
+    return requests.get(raw_url.strip()).url
 
-total_ok_commits = 0
 
-for url in urls_str.split():
+with open('urls.txt') as file:
+    for url in file:
+        try:
+            url = get_redirected_url(url)  # чтобы получить redirected url
+            repo = g.get_repo(parse_url(url))
+            
+            commits_in_repo = repo.get_commits(since=SINCE, until=UNTIL).totalCount  # master or main by default            
+            print(url.ljust(75), commits_in_repo)  # format by left side
+            TOTAL_COMMITS += commits_in_repo
 
-    raw_url = requests.get(url).url
-    response = requests.get(generate_api_from_url(raw_url))
+        except GithubException:
+            print("Error, master branch not found: ", url)
 
-    if response.status_code == 200:
-        now = count_ok_commits(response)
-        total_ok_commits += now
-        print("Commits", now, url)
-    else:
-        print("Error", response.status_code, url)
-
-print(total_ok_commits)
+print("Total commits:", TOTAL_COMMITS)
