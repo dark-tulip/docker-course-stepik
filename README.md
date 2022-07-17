@@ -120,4 +120,13 @@ ENTRYPOINT ["bin/bash", "-c", "nano"]
 docker rmi $(docker images -f "dangling=true" -q)
 ```
 
+#### Python virtualenv
+```Python
+virtualenv -p python3 virtualenv
+cd virtualenv/bin
+source activate
+pip3 install wrapt==1.10.1
+pip3 install 'requests<=1.9'
+pip3 install 'snakemake<=3.13.3'
+```
     
