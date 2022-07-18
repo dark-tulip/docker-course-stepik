@@ -129,6 +129,20 @@ pip3 install wrapt==1.10.1
 pip3 install 'requests<=1.9'
 pip3 install 'snakemake<=3.13.3'
 ```
+or 
+```
+pip3 install snakemake
+для работы Snakemake требуется Python 3.
+ Пример работы с virtualenv:
+# Create virtual environment with name 'venv'
+virtualenv venv
+# Activate virtual environment
+. venv/bin/activate
+# Do whatever you want to, e.g. install dependencies 
+
+# Exit from virtual environment
+deactivate
+```
 #### Snakemake words counter from file
 ```
 rule count:
