@@ -192,3 +192,24 @@ rule copy:
   output: "out/{file}"
   shell: "cp {input} {output}"
 ```
+Snakefile for task - characters counter
+```
+FILES = [file for file in shell("ls input/", iterable=True)]
+
+rule all:
+  input: expand("output/{file}", file=FILES)
+  output: touch(".status")
+
+rule copy:
+  input: "input/{file}"
+  output: "output/{file}"
+  run:
+    print("Input::", input)
+    print("Out:: ", output)    
+    with open(str(input), "r") as f:
+      txt = f.readline()
+      d = {key: txt.count(key) for key in set([ch for ch in txt])}
+      result = str("\n".join(["{}: {}".format(key, d[key]) for key in sorted(d.keys())]))
+      with open(str(output), "w") as outfile:
+        outfile.write(result)  
+```
