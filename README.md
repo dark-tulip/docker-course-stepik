@@ -176,3 +176,19 @@ snakemake -s Snakefile --dag | dot -Tsvg > pipeline.svg
 ```bash
 snakemake -s Snakefile --dag | dot -Tsvg | display
 ```
+How to use python in Snakefile - for copy files from input directory to output dir
+```yaml
+def gen(wildcards):
+  return ["out/{}".format(i) for i in range(1,6)]
+
+
+rule all:
+  input: gen
+  output: touch(".status")
+
+
+rule copy:
+  input: "input/{file}"
+  output: "out/{file}"
+  shell: "cp {input} {output}"
+```
