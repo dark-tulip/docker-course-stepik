@@ -213,3 +213,49 @@ rule copy:
       with open(str(output), "w") as outfile:
         outfile.write(result)   
 ```
+CWL - common workflow language
+Проверка 
+```cwltool --outdir output word-count.cwl --input_file input/input```
+v1 Words counter
+```
+cwlVersion: v1.0
+class: CommandLineTool
+
+requirements:
+  InitialWorkDirRequirement:
+    listing:
+      - entryname: example.sh
+        entry: |-
+          #!/bin/bash
+          filename=`echo $(inputs.input_file.location) | awk '{ split($0,array,"://")} END{print array[2]}'`
+          cat $filename | wc -w
+inputs:
+  input_file:
+    type: File
+    inputBinding:
+      position: 1
+
+outputs:
+  output_file:
+    type: File
+    outputBinding: 
+      glob: output/output
+
+baseCommand: ["sh", "example.sh"]
+stdout: output/output
+```
+v2 Words counter
+```
+cwlVersion: v1.0
+class: CommandLineTool
+
+baseCommand: wc
+arguments: ["-w"]
+
+stdout: output
+inputs:
+  input_file: stdin
+
+outputs:
+  output_file: stdout
+```
