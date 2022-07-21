@@ -213,11 +213,14 @@ rule copy:
       with open(str(output), "w") as outfile:
         outfile.write(result)   
 ```
-CWL - common workflow language
-Проверка 
-```cwltool --outdir output word-count.cwl --input_file input/input```
-v1 Words counter
+#### CWL - common workflow language
+
+##### Проверка 
+```yaml
+cwltool --outdir output word-count.cwl --input_file input/input
 ```
+v1 Words counter
+```yaml
 cwlVersion: v1.0
 class: CommandLineTool
 
@@ -245,7 +248,7 @@ baseCommand: ["sh", "example.sh"]
 stdout: output/output
 ```
 v2 Words counter
-```
+```yaml
 cwlVersion: v1.0
 class: CommandLineTool
 
