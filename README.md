@@ -193,7 +193,7 @@ rule copy:
   shell: "cp {input} {output}"
 ```
 Snakefile for task - characters counter
-```
+```yaml
 FILES = [file for file in shell("ls input/", iterable=True)]
 
 rule all:
@@ -207,9 +207,9 @@ rule copy:
     print("Input::", input)
     print("Out:: ", output)    
     with open(str(input), "r") as f:
-      txt = f.readline()
+      txt = f.readline().strip()
       d = {key: txt.count(key) for key in set([ch for ch in txt])}
       result = str("\n".join(["{}: {}".format(key, d[key]) for key in sorted(d.keys())]))
       with open(str(output), "w") as outfile:
-        outfile.write(result)  
+        outfile.write(result)   
 ```
