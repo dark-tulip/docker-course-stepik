@@ -69,6 +69,32 @@ docker run -it --network=simple-dns parseq/stepik-linking-docker-client
 docker commit img-from-container myimage
 docker images
 ```
+
+#### 10 Gitlab-runner in docker
+```
+Options:
+--rm - Automatically remove the container when it exits
+-d - Run container in background and print the ID
+```
+```bash
+docker volume list
+docker volume create gitlab-runner-config
+docker volume inspect gitlab-runner-config
+
+# create the volume for gitlab-runner
+docker run -d --name gitlab-runner --restart always -v gitlab-runner-config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner
+
+# register GitlabRunner installed in docker
+docker run --rm -it -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner register
+
+sudo cat /var/lib/docker/volumes/gitlab-runner-config/_data/config.toml
+
+# stop and remove container
+docker stop gitlab-runner
+docker rm gitlab-runner
+```
+
+
  -с / --change применяет инструкцию к создаваемому образу. В данном случе мы берем контейнер create-image-from-me, командой commit создаем из него образ newimage, опцией --change определяя команду (аналогичную таковой Dockerfile)
  ```bash
  docker commit --change='CMD ["python3"]' create-image-from-me myimage
