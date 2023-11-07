@@ -356,3 +356,11 @@ Successfully copied 2.05kB to clever_newton:/new_AAAAA.txt
 tansh@tansh:~$ docker cp clever_newton:/BBBB.txt host_BBBB.txt
 Successfully copied 2.05kB to /home/tansh/host_BBBB.txt
 ```
+docker image prune -a
+- образы с одним именем можно тегировать '-t' option when you're building an image - это как метка или версия образа
+- ставить на прод latest опасно и чревато нагрузкой на сеть
+
+## Харнение данных в docker образе и контейнерах
+1) readonly, inside image (built-in) mode
+2) read+write containers, temporary - dynamic and changable **stored in memory**
+3) read+write containers+volumes permanent - must not be lost if container stop / restarts **stored in a file or database**
