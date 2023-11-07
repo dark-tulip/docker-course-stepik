@@ -364,3 +364,9 @@ docker image prune -a
 1) readonly, inside image (built-in) mode
 2) read+write containers, temporary - dynamic and changable **stored in memory**
 3) read+write containers+volumes permanent - must not be lost if container stop / restarts **stored in a file or database**
+
+
+### Увеличить кол-во виртуальной памяти  
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
