@@ -327,17 +327,32 @@ outputs:
 - > Kubernetes
 
 ## Images 
-- everything on the image IS READONLY
+- everything on the **image IS READONLY**
 - container is runnning unit of application
-`COPY . .`
+- `COPY . .`
 - первая точка значит - текущая директория вне контейнера (Где расположен сам докерфайл) - HOST FILE SYSTEM
 - вторая точка означает текущий IMAGE/CONTAINER FILE SYSTEM
 - COPY `./` означает в текущий `WORKDIR`
 - `RUN npm install` тоже запуститься в заданном `WOKRDIR`
 - `EXPOSE` со внутренним портом контейнера поделиться с хост машиной
 - `docker run -p` option в каком локальном порту запустить контейнер? 3000:80 (host:container)
-`docker build .`
-`docker run IMAGE_ID`
+- `docker build .` - near the dockerfile
+- `docker run IMAGE_ID`
+- фишка - можно не полностью вводить ID запускаемого образа*, он найдет по началу уникальной строки
+- **LAYER BASED ARCHITECTURE** - докер кэширует каждый исполняемый слой, обратно исполняются только измененные сценарии либо ресурсы - поэтому последующая сборка проходит быстрее
+- каждая инструкция это новый слой в докер контейнере
 
-- фишка - можно не полностью вводить ID запускаемого образа*, он найдет по началу уникальной строки 
+#### Опция `-d` при запуске контейнера -detached mode - не показывать логи в консоли, запускать on background (по умолчанию attached)
+#### Начать читать логи контейнера `docker logs -f some_container` или с командой `docker attach container_name` - for STDOUR/STDERR signals
+#### Interactive mode `docker run -it ID` - STDIN - to provide input
+- option `-rm` helps to automatically remove running container
+- Команда `docker cp local/file container_name:/test` позволяет скопировать файл в контейнер или из него в хостовую ОС `docker cp container_name:/test local/file`
+```bash
+# From host to container
+tansh@tansh:~$ docker cp AAAAAA.txt clever_newton:/new_AAAAA.txt
+Successfully copied 2.05kB to clever_newton:/new_AAAAA.txt
 
+# From container to host 
+tansh@tansh:~$ docker cp clever_newton:/BBBB.txt host_BBBB.txt
+Successfully copied 2.05kB to /home/tansh/host_BBBB.txt
+```
