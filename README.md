@@ -288,3 +288,56 @@ inputs:
 outputs:
   output_file: stdout
 ```
+
+
+# Docker and containers
+- **independent, standartized application package**
+- used in different development environments
+- **Environment is your lamguage, framework and runtimes**
+- to be sure that your application is used this exact version
+
+### When и когда?
+- когда среды теста и прода могут быть различны
+- когда вы работаете над несколькими проектами
+- когда версии и зависимости одного проекта не совместимы с вашей локальной системой
+- lower impact on OS, faster, minimal disk usage
+- encapsulates environment instead of whole machine
+
+### Difference with operating system
+- your operating system Virtual OS
+- another machine
+- general overhead, like a standalone machie and a lot of resource consumption
+- default setup process
+- bigger imppact on OS, slower, higher disk space usage
+- sharing and rebuilding can be challenging
+- encapculates "whole machine" instead of environment
+
+`Docker is just most common used tool for creating and managing containers`
+
+## Why Docker Toolbox? (for old unsupported versions of OS)
+- Docker toolbox эмулирует виртуальную машину линукса, на системах где нельзя установить docker desktop
+- Docker engine Deamon uses Linux specific kernel features - so you cannot install directly on Windows
+- you can use docker-machine to install small Linux VM on your machine
+- last versions of windows does not require it
+
+## Docker tools and building blocks
+- Docker Engine Deamon installs always -> Docker Desktop (incl CLI)
+- Docker Hub
+- Docker Compose
+- > Kubernetes
+
+## Images 
+- everything on the image IS READONLY
+- container is runnning unit of application
+`COPY . .`
+- первая точка значит - текущая директория вне контейнера (Где расположен сам докерфайл) - HOST FILE SYSTEM
+- вторая точка означает текущий IMAGE/CONTAINER FILE SYSTEM
+- COPY `./` означает в текущий `WORKDIR`
+- `RUN npm install` тоже запуститься в заданном `WOKRDIR`
+- `EXPOSE` со внутренним портом контейнера поделиться с хост машиной
+- `docker run -p` option в каком локальном порту запустить контейнер? 3000:80 (host:container)
+`docker build .`
+`docker run IMAGE_ID`
+
+- фишка - можно не полностью вводить ID запускаемого образа*, он найдет по началу уникальной строки 
+
