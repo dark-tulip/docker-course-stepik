@@ -365,10 +365,16 @@ docker image prune -a
 2) read+write containers, temporary - dynamic and changable **stored in memory**
 3) read+write containers+volumes permanent - must not be lost if container stop / restarts **stored in a file or database**
 
-
+каждый слой в докер контейнере кэшиурется и при последу№щей сборке будет использован кэш этого слоя. 
 ### Увеличить кол-во виртуальной памяти  
 ```bash
 sudo sysctl -w vm.max_map_count=262144
 ```
 ### Why alpine is not preferred?
 - alpine сборки могут увеличивать время билда - содержать некоторые ошибки в либах или снижение в производительности
+- использование alpine версии для питона плохая идея!
+why?
+- стандартная библиотека debian линукса принимает уже скомпилированные бинарные `.whl` пакеты
+- для alpine версий скачиваются исходники в сжатом формате `.tar.gz`. Для alpine linux используется musl который переводит source код в С код. Это доп расходы по сравнению со стандратной gclib (C library) который используется в том числе и для питона
+- некоторые пакеты питона PyPl используют готовый wheel который значительно ускоряет процесс сборки
+- при использовании Alpine Linux каждый используемый пакет нужно изначально скомпилировать в С код
