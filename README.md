@@ -370,3 +370,5 @@ docker image prune -a
 ```bash
 sudo sysctl -w vm.max_map_count=262144
 ```
+### Why alpine is not preferred?
+- alpine сборки могут увеличивать время билда - содержать некоторые ошибки в либах или снижение в производительности
