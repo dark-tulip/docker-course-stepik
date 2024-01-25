@@ -2,6 +2,8 @@
 
 1) создаем три инстанса 
 
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/e6dfb779-ab51-49c0-9e41-d752aad27253)
+
 
 ```bash
 docker swarm init --advertise-addr 192.168.0.16
@@ -147,10 +149,21 @@ $ docker inspect node1
 ]
 ```
 
-## Удалить ноду из кластера
+### Удалить ноду из кластера
 
 ```bash
 docker node rm hostname
 ```
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/ba1263e2-811a-43d3-bddd-6ad29a29ae44)
+
+### Посмотреть токен воркера
+
+```bash
+docker swarm join-token worker
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/b8677cca-3391-479c-9e9e-b07e662f9378)
+
+
+
