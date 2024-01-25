@@ -9,7 +9,7 @@ docker swarm init --advertise-addr 192.168.0.16
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/03024ca0-7751-463b-a314-74020eeea6ac)
 
-### чтобы добавить еще одну ноду в кластер надо внести команду с выведенным токеном
+### Add node to cluster
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/78282e8f-71a3-4a05-ae95-db35d95e7856)
 
@@ -133,9 +133,9 @@ $ docker inspect node1
                 ]
             },
             "TLSInfo": {
-                "TrustRoot": "-----BEGIN CERTIFICATE-----\nMIIBajCCARCgAwIBAgIUWflM0yNKip3breJK4gMy/fVpiUowCgYIKoZIzj0EAwIw\nEzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjQwMTI1MDUzMDAwWhcNNDQwMTIwMDUz\nMDAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABNbb04jMKupd+PuMqdC8OAE3j7IM0Zk5DJpa46bqeBY1Mits9Tno7HYHJqRN\nMvunYiDVRm0bKf/pXf7w7vfgCCujQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBRaaD1PVUl/wJ1C1OEiA2RbJFBKPTAKBggqhkjO\nPQQDAgNIADBFAiBayTG3Zu4VTr/pGTM6Uri3L+oWX+i+TA4eInHDVABy+gIhAMHr\np/1I4TZv4IYjL7WJ19hTnDKnqMg1ebaDBy2Jvv+C\n-----END CERTIFICATE-----\n",
-                "CertIssuerSubject": "MBMxETAPBgNVBAMTCHN3YXJtLWNh",
-                "CertIssuerPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE1tvTiMwq6l34+4yp0Lw4ATePsgzRmTkMmlrjpup4FjUyK2z1OejsdgcmpE0y+6diINVGbRsp/+ld/vDu9+AIKw=="
+                "TrustRoot": "**",
+                "CertIssuerSubject": "**",
+                "CertIssuerPublicKey": "**"
             }
         },
         "Status": {
