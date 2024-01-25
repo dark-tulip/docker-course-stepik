@@ -230,6 +230,8 @@ docker service inspect wp_mysql
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/b4401923-4c4a-401a-9b9c-6be7335334c9)
 
+так можно посмотреть какой сервис запущем на какой ноде
+
 ```
 docker service ps wp_wordpress wp_postgres wp_mysql
 ```
