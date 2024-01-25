@@ -2,9 +2,6 @@
 
 1) создаем три инстанса 
 
-![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/e6dfb779-ab51-49c0-9e41-d752aad27253)
-
-
 ```bash
 docker swarm init --advertise-addr 192.168.0.16
 ```
@@ -166,4 +163,40 @@ docker swarm join-token worker
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/b8677cca-3391-479c-9e9e-b07e662f9378)
 
 
+### docker stack deploy
 
+```
+docker stack deploy -c ./stack.yml wp
+```
+
+```stack.yml
+version: "3"
+
+services:
+    wordpress:
+        image: wordpress
+        ports:
+            -   80:80
+        environment:
+            WORDPRESS_DB_HOST: mysql
+            WORDPRESS_DB_NAME: wp
+            WORDPRESS_DB_USER: wp
+            WORDPRESS_DB_PASSWORD: wp_pass
+
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_USER: wp
+            MYSQL_DATABASE: wp
+            MYSQL_PASSWORD: wp_pass
+            MYSQL_ROOT_PASSWORD: root
+
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: mysql
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/7cc5b88a-2f28-4329-b304-591c2f23cca6)
