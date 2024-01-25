@@ -206,19 +206,32 @@ services:
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f64ca931-b918-41a4-acfb-43440a7ca24b)
 
-
-### список всех запущенных стеков
-
-```
-docker stack ls
-```
-
-![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/6aef1af7-501a-448a-9288-5a3d3cd4a505)
-
-### Список сервисов в запущенном стеке
+### Список запущенных стеков и сервисов
 
 ```bash
+docker stack ls
+docker service ls
 docker stack services wp
+docker service ps wp_mysql
 ```
 
-![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f7f0773f-4f75-4b51-8311-b1c1de6c5f1f)
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/a908655a-46c2-48fe-981d-734d1d87d1a8)
+
+- DESIRED STATE ожидаемое состояние
+- CURRENT STATE текущее состояние
+
+также можно инспектировать сервисы
+
+```
+docker service inspect wp_mysql
+```
+
+таски приложения будут распределены по всему кластеру, поэтому команда `docker ps` вернет только запущенный на этой машине контейнер
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/b4401923-4c4a-401a-9b9c-6be7335334c9)
+
+```
+docker service ps wp_wordpress wp_postgres wp_mysql
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f8368a87-b535-4ec2-8108-8367571ffc65)
