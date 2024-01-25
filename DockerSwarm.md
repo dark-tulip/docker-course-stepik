@@ -1,4 +1,4 @@
-docker play labs
+## docker play labs
 
 1) создаем три инстанса 
 
@@ -17,7 +17,7 @@ docker swarm init --advertise-addr 192.168.0.16
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/6fbe69e5-682d-46dd-8005-d347caacdabe)
 
-### Удалить ноду из кластера
+### Покинуть рой из кластера
 
 ```bash
 docker swarm leave
@@ -146,3 +146,11 @@ $ docker inspect node1
     }
 ]
 ```
+
+## Удалить ноду из кластера
+
+```bash
+docker node rm hostname
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/ba1263e2-811a-43d3-bddd-6ad29a29ae44)
