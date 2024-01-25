@@ -200,3 +200,8 @@ services:
 ```
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/7cc5b88a-2f28-4329-b304-591c2f23cca6)
+
+
+теперь по портам 80 и 8080 можно открыть phpMyadmin and wordpress
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f64ca931-b918-41a4-acfb-43440a7ca24b)
