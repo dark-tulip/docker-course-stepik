@@ -205,3 +205,20 @@ services:
 теперь по портам 80 и 8080 можно открыть phpMyadmin and wordpress
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f64ca931-b918-41a4-acfb-43440a7ca24b)
+
+
+### список всех запущенных стеков
+
+```
+docker stack ls
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/6aef1af7-501a-448a-9288-5a3d3cd4a505)
+
+### Список сервисов в запущенном стеке
+
+```bash
+docker stack services wp
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f7f0773f-4f75-4b51-8311-b1c1de6c5f1f)
