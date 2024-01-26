@@ -149,3 +149,57 @@ secrets:
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/193ccbe8-6a88-4fd8-a66e-c251d9b44bb4)
 
+
+## Configs
+
+- виртуальные файлы которые монтируются в контейнеры
+- конфиги монтируются внутри кластера докер и доступны на всех нодах
+
+1) создаем новый стек
+```yaml
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 81:80
+```
+
+2) create new config, после создания нельзя редактировать, можно только удалить
+
+```config
+server {
+  listen 80;
+  server_name _;
+  location = / {
+    add_header Content-Type text/plain;
+    return 200 'Portainer config';
+  }
+}
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/41177aa6-8198-4ab7-88f9-6a7d13ed52b7)
+
+3) Монтирование конфига внутри контейнера, modify stack
+
+```yaml
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 81:80
+    configs:  # примонтировать конфиг по данному пути
+      - source: nginxConfig
+        target: /etc/nginx/conf.d/default.conf
+
+configs:
+  nginxConfig:
+    external: true
+```
+
+4) config accepted by nginx
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f81a0b10-fcb8-4693-aa7f-0d52952b4fbc)
