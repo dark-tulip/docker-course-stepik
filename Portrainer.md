@@ -103,3 +103,6 @@ services:
             constraints: 
               - "node.labels.nginx!=1"  # разместится только на первой ноде
 ```
+
+## Secrets
+
