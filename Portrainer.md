@@ -106,3 +106,46 @@ services:
 
 ## Secrets
 
+Секреты монтируются в контейнер как монтирование файлов или папок
+
+Данный секрет нельзя прочитать или изменить, его можно только удалить
+
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/b052f114-68d4-4345-9fdf-4378d6c26789)
+
+
+Эти секреты доступны во всех нодах кластера, тут пароль читается из файла
+
+```
+version: "3.5"
+
+services:
+  mysql:
+    image: mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: test
+    secrets:
+      - mysql_root_password
+
+  pma:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+
+secrets:
+  mysql_root_password:
+    external: true
+```
+
+это скроет значение из публичного доступа или конфиг файла
+
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/8f50ab03-f4ac-411f-9c33-26aabcf34144)
+
+Через портрейнер можно зайти в терминал и увидеть расшифрованный секрет
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/193ccbe8-6a88-4fd8-a66e-c251d9b44bb4)
+
