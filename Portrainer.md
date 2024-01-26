@@ -20,3 +20,10 @@ docker stack deploy -c portainer-agent-stack.yml portainer
 визуалайзер кластера
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/e775ecef-f0f5-4eaa-8328-90e049c835a9)
+
+
+### Настройки стека через UI
+
+можно изменить стек на котором был поднят контейнер 
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/1613f0e9-1965-4fb8-be84-f2bc0ece3795)
