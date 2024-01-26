@@ -168,7 +168,7 @@ services:
 
 2) create new config, после создания нельзя редактировать, можно только удалить
 
-```config
+```conf
 server {
   listen 80;
   server_name _;
@@ -203,3 +203,50 @@ configs:
 4) config accepted by nginx
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/f81a0b10-fcb8-4693-aa7f-0d52952b4fbc)
+
+### Построение конфига с помощью шаблонизатора golang
+
+1) На ноде сохранить новый конфиг файл
+
+```
+#nginx.conf
+
+server {
+    listen 80;
+    server_name _;
+
+    location = / {
+        add_header Content-Type text/plain;
+        return 200 'ENV_VAR = {{ env "ENV_VAR" }}; Service name = {{ .Service.Name }}';
+    }
+}
+```
+2) Создать конфиг, далее появится в портрейнере
+
+```bash
+docker config create --template-driver golang nginx_new_config2 ./nginx.conf 
+# qv4dgnqdp7b8xedp7qj52lky7
+```
+
+3) теперь нужно обновить стек nginx
+
+```conf
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 81:80
+    configs:  # примонтировать конфиг по данному пути
+      - source: nginx_new_config2
+        target: /etc/nginx/conf.d/default.conf
+    environment:
+      ENV_VAR: test_env_value
+      
+configs:
+  nginx_new_config2:
+    external: true
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/117a9e97-343c-49c5-abb3-343c1be38e9a)
