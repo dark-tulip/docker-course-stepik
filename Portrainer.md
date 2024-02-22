@@ -307,4 +307,24 @@ services:
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/4fd52058-8d28-4541-b4c9-303f7e834436)
 
+3) команда отправляется последовательно по одной реплике, но бывают случаи когда до обновления след предыдущая не успевает запуститься
+- можно натсроить задержку между обновлением реплик
+
+```yaml
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    ports: [80:80]  
+    command: sh -c 'sleep 22 && nginx -g "daemon off;"'
+    deploy:
+      replicas: 2
+      update_config:
+        # сколько реплик обновлять параллельно за итерацию
+        parallelism: 1
+        # задержка между обновлениями
+        delay: 35s
+```
+
 тем временем nginx всегда доступен к использованию
