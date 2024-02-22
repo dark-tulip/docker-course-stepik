@@ -250,3 +250,61 @@ configs:
 ```
 
 ![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/117a9e97-343c-49c5-abb3-343c1be38e9a)
+
+
+## Healthchecks
+
+индексный файл nginx находится по этому пути
+```
+usr/share/nginx/html/index.html
+```
+
+- даже если удалить его и веб сервер будет отвечать с ошибкой портрейнер будет считать что сервис запущен
+- чтобы валидировать незапущенный сервер можно добавить healthcheck внутри стека для проверки индексной страницы
+```yaml
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    ports: [81:81]  
+    # если ответ не был 200 curl вернет ошибку, повторить 3 раза до шатдауна контейнера
+    healthcheck:
+      test: curl -f http://localhost:81
+      interval: 3s
+      retries: 3
+      start_period: 5s
+```
+
+## Zero down time setting
+- нужно как минимум две реплики
+- docker swarm умеет перезагружать реплики последовательно
+
+1) на ноде настройте вотч на сервисы (update info every 1 sec)
+```
+watch -n 1 docker service ps nginx_nginx
+```
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/8bb9d830-db18-4feb-a9a5-1d35ca5c7cba)
+
+
+2) обновите стек
+```yml
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    ports: [80:80]  
+    command: sh -c 'sleep 21 && nginx -g "daemon off;"'
+    deploy:
+      replicas: 2
+```
+
+`command: sh -c 'sleep 21 && nginx -g "daemon off;"'` значит до запуска nginx подождать 21 сек (просто для теста)
+
+последовательно обновляет сервисы 
+
+![image](https://github.com/dark-tulip/docker-course-stepik/assets/89765480/4fd52058-8d28-4541-b4c9-303f7e834436)
+
+тем временем nginx всегда доступен к использованию
