@@ -18,4 +18,18 @@
 ### Inventory
 - Файл управляемых хостов
 - формат `ini` (если мало) или `yaml` формат (если много - появился недавно)
+- `ansible-inventory -i inventory.ini --list`
+
+
+vim inventory.ini
+```
+[workers]
+worker1 ansible_host=192.168.30.1
+worker2 ansible_host=127.0.0.1
+
+[workers:vars]
+ansible_user=nick ansible_ssh_private_key_file=~/.ssh.infra
+```
+
+`ansible workers -m ping -i inventory.ini`
 
