@@ -39,3 +39,12 @@ ansible_user=nick ansible_ssh_private_key_file=~/.ssh.infra
 ansible workers -m ping -i inventory.ini
 ```
 
+### Выолняемые единицы
+- Module - 
+- Task - 
+- Play - уполрядоченный список task-oв который выполняется на указанной managed node
+- Playbook - упорядоченный список play-eв, для достижения цели
+
+### Roles
+
+
