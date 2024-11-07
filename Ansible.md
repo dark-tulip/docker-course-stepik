@@ -2,6 +2,7 @@
 
 - подход infrastructure as a code
 - Система управления конфигурациями
+- не создан для того чтобы
 
 ### Плюсы:
 
@@ -19,6 +20,9 @@
 - Файл управляемых хостов
 - формат `ini` (если мало) или `yaml` формат (если много - появился недавно)
 - `ansible-inventory -i inventory.ini --list`
+- хосты можно объединять в группу
+- `ansible all -m ping -i inventory.ini`
+- Группы хостов задают по правилу `What(db, web, cache), Where(datacenter, region, floot), When (dev, test, prod)` + осознанные названия
 
 
 vim inventory.ini
@@ -31,5 +35,7 @@ worker2 ansible_host=127.0.0.1
 ansible_user=nick ansible_ssh_private_key_file=~/.ssh.infra
 ```
 
-`ansible workers -m ping -i inventory.ini`
+```
+ansible workers -m ping -i inventory.ini
+```
 
